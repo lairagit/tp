@@ -1,0 +1,127 @@
+
+local speaker = game.Players.LocalPlayer
+local function getRoot(plr)
+    local char = plr.Character
+
+    if char and char:FindFirstChild('HumanoidRootPart') then
+        return char.HumanoidRootPart
+    end
+    return false
+end
+local function getCharacter(plr)
+    local char = plr.Character
+
+    if char then
+        return char
+    end
+    return false
+end
+local function getHead(plr)
+    local char = plr.Character
+
+    if char and char:FindFirstChild('Head') then
+        return char.Head
+    end
+    return false
+end
+local function getHumanoid(plr)
+    local char = plr.Character
+
+    if char and char:FindFirstChildWhichIsA('Humanoid') then
+        return char:FindFirstChildWhichIsA('Humanoid')
+    end
+    return false
+end
+local function FindTool(toolName, plr)
+    plr = plr or game.Players.LocalPlayer
+
+    if getCharacter(plr):FindFirstChild(toolName) then
+        return getCharacter(plr):FindFirstChild(toolName)
+    elseif plr.Backpack:FindFirstChild(toolName) then
+        return plr.Backpack:FindFirstChild(toolName)
+    end
+    return false
+end
+local function FindPlayer(name)
+    for i,v in pairs(game.Players:GetChildren()) do
+        if v.Name:lower():match(v.Name:lower()) then
+            return v
+        end
+    end
+    return nil
+end
+
+
+
+function tp(vector)
+    if typeof(vector) == 'table' then
+        vector = Vector3.new(vector[1], vector[2], vector[3])
+    end
+    customvelo = customvelo or 5e4
+    faltando = faltando or false
+    isplayer = isplayer or false
+    abort = false
+    if customvelo == nil then
+        customvelo = 150000
+    end
+    local aperta = false
+    
+
+
+    pcall(function()
+        local item = require(game:GetService("ReplicatedStorage").Module.AlexRagdoll)
+        local oldfunction = item.Ragdoll
+        item.Ragdoll = function()
+            return wait(9e9)
+        end
+    end)
+    local BodyVelocity = Instance.new('BodyPosition')
+    BodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+    BodyVelocity.D = 500
+    BodyVelocity.P = 50000
+    BodyVelocity.Parent = getRoot(speaker)
+    local reached = false
+    local old = teleport_velo
+    local Loop = game:GetService('RunService').Stepped:Connect(function(_, step)
+        
+        local yourRoot = getRoot(speaker)
+        local diff
+        if isplayer == true then
+            vector = getRoot(target).Position + Vector3.new(0, 400, 0)
+        end
+        diff = (vector - getRoot(speaker).Position)
+        if speaker.Character:FindFirstChild('Humanoid').Sit == true then
+            BodyVelocity.P = customvelo
+            teleport_velo = 400
+        else
+            teleport_velo = 180
+            BodyVelocity.P = 50000
+        end
+        if (vector - getRoot(speaker).Position).Magnitude < 1 or speaker.Character.Humanoid.Health == 0 then
+            reached = true
+        end
+        BodyVelocity.Position = getRoot(speaker).Position + diff.Unit * math.min(step * teleport_velo, diff.Magnitude)
+        
+    end)
+
+    repeat task.wait() getRoot(speaker).Velocity = Vector3.new(0, 0, 0) until reached == true or abort == true
+    getRoot(speaker).Velocity = Vector3.new(0, 0, 0)
+    Loop:Disconnect()
+    BodyVelocity:Destroy()
+    getRoot(speaker).Velocity = Vector3.new(0, 3, 0)
+end
+
+function teleport(pos)
+    tp(getRoot(speaker).Position + Vector3.new(0, 400, 0))
+    wait()
+    tp(pos + Vector3.new(0, 400, 0))
+    wait()
+    tp(pos)
+end
+function Teleport(pos) teleport(pos) end
+
+local function tip(vector)
+    Teleport(vector)
+end
+
+return tip
