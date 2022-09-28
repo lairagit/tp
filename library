@@ -1,0 +1,547 @@
+
+local library = {
+    new = function()
+        local ScreenGui = Instance.new("ScreenGui")
+        local main = Instance.new("Frame")
+        local Tabs = Instance.new("Frame")
+        local UIListLayout = Instance.new("UIListLayout")
+        local maintitle = Instance.new("TextLabel")
+        local secondtitle = Instance.new("TextLabel")
+        local TabsFilter = Instance.new("Frame")
+        local cortina = Instance.new("Frame")
+        local ImageLabel = Instance.new("ImageLabel")
+        local Logo = Instance.new("ImageButton")
+        local UICorner = Instance.new("UICorner")
+
+        ScreenGui.Parent = game.CoreGui
+        ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+        main.Name = "main"
+        main.Parent = ScreenGui
+        main.BackgroundColor3 = Color3.fromRGB(209, 24, 32)
+        main.BorderSizePixel = 0
+        main.Position = UDim2.new(0.303933024, 0, 0.248577446, 0)
+        main.Size = UDim2.new(0.39296189, 0, 0.0279146135, 0)
+
+        Tabs.Name = "Tabs"
+        Tabs.Parent = main
+        Tabs.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        Tabs.BackgroundTransparency = 0.350
+        Tabs.BorderSizePixel = 0
+        Tabs.Position = UDim2.new(0, 0, 1, 0)
+        Tabs.Size = UDim2.new(0.281094521, 0, 17.7647057, 0)
+
+        UIListLayout.Parent = Tabs
+        UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        UIListLayout.Padding = UDim.new(0, 5)
+
+        maintitle.Name = "main title"
+        maintitle.Parent = main
+        maintitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        maintitle.BackgroundTransparency = 1.000
+        maintitle.Position = UDim2.new(0.0223880596, 0, 0, 0)
+        maintitle.Size = UDim2.new(0.691542327, 0, 1, 0)
+        maintitle.Font = Enum.Font.FredokaOne
+        maintitle.Text = "LAIRA X"
+        maintitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        maintitle.TextSize = 17.000
+        maintitle.TextXAlignment = Enum.TextXAlignment.Left
+
+        secondtitle.Name = "second title"
+        secondtitle.Parent = main
+        secondtitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        secondtitle.BackgroundTransparency = 1.000
+        secondtitle.Position = UDim2.new(0.713930249, 0, 0, 0)
+        secondtitle.Size = UDim2.new(0.286069661, 0, 1, 0)
+        secondtitle.Font = Enum.Font.FredokaOne
+        secondtitle.Text = "LAIRA X"
+        secondtitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        secondtitle.TextSize = 17.000
+        secondtitle.TextScaled = true
+        secondtitle.TextXAlignment = Enum.TextXAlignment.Left
+
+        TabsFilter.Name = "Tabs Filter"
+        TabsFilter.Parent = main
+        TabsFilter.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        TabsFilter.BackgroundTransparency = 0.350
+        TabsFilter.BorderSizePixel = 0
+        TabsFilter.Position = UDim2.new(0.296019912, 0, 1, 0)
+        TabsFilter.Size = UDim2.new(0.703980088, 0, 17.7647057, 0)
+
+        cortina.Name = "cortina"
+        cortina.Parent = main
+        cortina.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        cortina.BorderSizePixel = 0
+        cortina.Position = UDim2.new(7.59143717e-08, 0, 1, 0)
+        cortina.Size = UDim2.new(0.997512519, 0, 0, 0)
+
+        ImageLabel.Parent = cortina
+        ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        ImageLabel.BackgroundTransparency = 1.000
+        ImageLabel.Position = UDim2.new(0.374064803, 0, 0.284768224, 0)
+        ImageLabel.Size = UDim2.new(0.25562343, 0, INF, 0)
+        ImageLabel.Image = "rbxassetid://11059478951"
+        ImageLabel.ImageTransparency = 1.000
+
+        Logo.Name = "Logo"
+        Logo.Parent = ScreenGui
+        Logo.Active = false
+        Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Logo.BorderSizePixel = 0
+        Logo.Position = UDim2.new(0.869012713, 0, 0.921182275, 0)
+        Logo.Selectable = false
+        Logo.Size = UDim2.new(0.0480961911, 0, 0.0788177326, 0)
+        Logo.Visible = false
+        Logo.Image = "rbxassetid://11059478951"
+
+        UICorner.Parent = Logo
+
+        -- Scripts:
+
+        local function TTEN_fake_script() -- maintitle.LocalScript 
+            local script = Instance.new('LocalScript', maintitle)
+
+            local Texto = "LAIRA X"
+            
+            local Creditos = "($ samuu by ヘンリケ)"
+            
+            local final = Texto .. ' ' .. Creditos
+            spawn(function()
+                while true do
+                    wait(1)
+                    for i = 1,#final do
+                        script.Parent.Text =  string.sub(final, 1,i)
+                        wait(0.05)
+                    end 
+                    wait(2)
+                    for i = #script.Parent.Text,1,-3 do
+                        script.Parent.Text = string.sub(script.Parent.Text, 1, i)
+                        wait(0.01)
+                    end
+                end
+            end)
+        end
+        coroutine.wrap(TTEN_fake_script)()
+        local function XRCHMJ_fake_script() -- secondtitle.LocalScript 
+            local script = Instance.new('LocalScript', secondtitle)
+
+            script.Parent.Text = "Unindentify game"
+            
+            local text = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+            
+            script.Parent.Text = "Checking game..."
+            local Sound = Instance.new("Sound", workspace)
+            Sound.SoundId = "rbxassetid://144686873"
+            wait(math.random(2,4))
+            Sound.Volume = 2
+            Sound:Play()
+            for i = 1,#text do
+                script.Parent.Text = string.sub(text, 1, i)
+                wait(0.01)
+            end
+        end
+        coroutine.wrap(XRCHMJ_fake_script)()
+        local function GSPFVED_fake_script() -- main.LocalScript 
+            local script = Instance.new('LocalScript', main)
+
+            local Service = game:GetService("UserInputService")
+            local essa = function()end
+            local global = {
+                menu = script.Parent;
+                TOGGLE_UI = function()
+                    essa()
+                end,
+                cortina = script.Parent.cortina;
+                ts = game.TweenService;
+                tw = TweenInfo.new(1, Enum.EasingStyle.Linear);
+                tw2 = TweenInfo.new(1, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut)
+            }
+            local debounce = true
+            essa = function()
+                local toggled = not global.menu.Visible
+            
+                if debounce then
+                    debounce = false
+                    if toggled == false then
+                        global.ts:Create(global.cortina, global.tw2, {Size = UDim2.new(0.998, 0,17.765, 0)}):Play()
+                        delay(0.4, function()
+                            global.ts:Create(global.cortina.ImageLabel, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {ImageTransparency = 0}):Play()
+                            delay(0.3, function()
+                                global.ts:Create(global.cortina.ImageLabel, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.In), {ImageTransparency = 1}):Play()
+                            end)
+                        end)
+                        wait(1)
+            
+                        script.Parent.Tabs.Visible = false
+                        script.Parent["Tabs Filter"].Visible = false
+                        wait()
+                        global.ts:Create(global.cortina, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut), {Size = UDim2.new(0.998, 0,0, 0)}):Play()
+                        wait(0.5)
+                        global.menu.ClipsDescendants = true
+                        global.ts:Create(global.menu, global.tw2, {Size=UDim2.new(0,0,0.028,0)}):Play()
+                        wait(1)
+                        global.menu.Visible = false
+                        global.menu.Parent.Logo.Visible = true
+                    else
+                        global.menu.Visible = true
+                        global.ts:Create(global.menu, global.tw2, {Size=UDim2.new(0, 402,0.028, 0)}):Play()
+            
+                        wait(1)
+                        global.menu.ClipsDescendants = false
+                        global.ts:Create(global.cortina, global.tw2, {Size = UDim2.new(0.998, 0,17.765, 0)}):Play()
+                        wait(1)
+                        script.Parent.Tabs.Visible = true
+                        script.Parent["Tabs Filter"].Visible = true
+                        global.menu.Parent.Logo.Visible = false
+                        global.ts:Create(global.cortina, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut), {Size = UDim2.new(0.998, 0,0, 0)}):Play()
+                    end
+                    debounce = true
+                end
+                
+            end
+            
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Laira X";
+                Text = string.format("Bind Menu %q", "F2");
+                Icon = "rbxassetid://8982365769";
+                Duration = 5;
+                Button1 = "Ok"
+            })
+            wait(2)
+            global.TOGGLE_UI()
+            
+            global.menu.Active = true
+            global.menu.Draggable = true
+            
+            Service.InputBegan:Connect(function(input)
+                if input.KeyCode == Enum.KeyCode.F2 then
+                    global.TOGGLE_UI()
+                end
+            end)
+            
+            global.menu.Parent.Logo.MouseButton1Down:Connect(function()
+                global.TOGGLE_UI()
+            end)
+            
+            local IsActive = false
+            
+            local TimeActive = 0
+            
+            global.menu.MouseEnter:Connect(function()
+                IsActive = true
+            end)
+            
+            
+            
+            global.menu.MouseLeave:Connect(function()
+                IsActive = false
+                TimeActive = 0
+                repeat
+                    TimeActive+=1
+                    wait(1)
+                until IsActive == true or TimeActive >= 8
+                if TimeActive >= 8 then
+                    for i,v in pairs(global.menu:GetDescendants()) do
+                        if v:IsA("Frame") or v:IsA("TextButton") or v:IsA("TextLabel") then
+                            pcall(function()
+                                local old = v.TextTransparency
+            
+                                global.ts:Create(v, global.tw, {TextTransparency=0.5}):Play()
+                                spawn(function()
+                                    repeat wait() until IsActive
+                                    global.ts:Create(v, global.tw, {TextTransparency=old}):Play()
+                                end)
+            
+                            end)
+            
+                            pcall(function()
+                                if not v:IsA("TextLabel") and not v:IsA("TextButton") then
+                                    local old = v.BackgroundTransparency
+                                    
+                                    
+                                    global.ts:Create(v, global.tw, {BackgroundTransparency=0.7}):Play()
+                                    spawn(function()
+                                        repeat wait() until IsActive
+                                        global.ts:Create(v, global.tw, {BackgroundTransparency=old}):Play()
+                                    end)
+                                end
+            
+                            end)
+            
+            
+                        end
+                    end
+                end
+            end)
+        end
+        coroutine.wrap(GSPFVED_fake_script)()
+
+        return {
+            newtab = function(title)
+                local Tab = Instance.new("ScrollingFrame")
+                local UIListLayout = Instance.new("UIListLayout")
+
+
+                Tab.Name = "Tab"
+                Tab.Parent = TabsFilter
+                Tab.Active = true
+                Tab.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+                Tab.BackgroundTransparency = 1.000
+                Tab.BorderSizePixel = 0
+                Tab.Size = UDim2.new(0.996073365, 0, 1, 0)
+                Tab.ScrollBarThickness = 7
+                Tab.Visible = false
+
+                UIListLayout.Parent = Tab
+                UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+                UIListLayout.Padding = UDim.new(0, 5)
+
+                local ButtonTab = Instance.new("TextButton")
+
+
+
+                ButtonTab.Name = "ButtonTab"
+                ButtonTab.Parent = Tabs
+                ButtonTab.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                ButtonTab.BackgroundTransparency = 1.000
+                ButtonTab.BorderSizePixel = 0
+                ButtonTab.Size = UDim2.new(0.997836351, 0, 0.0662251636, 0)
+                ButtonTab.Font = Enum.Font.PermanentMarker
+                ButtonTab.Text = title
+                ButtonTab.TextColor3 = Color3.fromRGB(190, 0, 0)
+                ButtonTab.TextScaled = true
+                ButtonTab.TextSize = 14.000
+                ButtonTab.TextWrapped = true
+                ButtonTab.MouseButton1Click:Connect(function()
+                    for i,v in pairs(TabsFilter:GetChildren()) do
+                        if v:IsA("Frame") then
+                            v.Visible = false
+                        end
+                    end
+                    Tab.Visible = true
+                end)
+
+
+                return {
+                    newbutton = function(tabela)
+                        tabela = tabela or {title = "";flag=function()end}
+
+                        local button = Instance.new("TextButton")
+
+
+                        button.Name = "button"
+                        button.Parent = Tab
+                        button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        button.BackgroundTransparency = 1.000
+                        button.BorderSizePixel = 0
+                        button.Position = UDim2.new(0, 0, 0.0182119198, 0)
+                        button.Size = UDim2.new(0, 265, 0, 20)
+                        button.Font = Enum.Font.Michroma
+                        button.LineHeight = 1.020
+                        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        button.TextScaled = true
+                        button.TextSize = 14.000
+                        button.Text = tabela.title
+                        button.TextStrokeTransparency = 0.000
+                        button.TextWrapped = true
+                        button.TextXAlignment = Enum.TextXAlignment.Left
+                        button.MouseButton1Click:Connect(function()
+                            pcall(function()
+                                pcall(tabela.flag, button)
+                            end)
+                        end)
+                    end;
+                    newlabel = function(tabela)
+                        tabela = tabela or {text = ""}
+                        local button = Instance.new("TextLabel")
+
+
+                        button.Name = "button"
+                        button.Parent = Tab
+                        button.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+                        button.BackgroundTransparency = 1.000
+                        button.BorderSizePixel = 0
+                        button.Position = UDim2.new(0, 0, 0.0182119198, 0)
+                        button.Size = UDim2.new(0, 265, 0, 20)
+                        button.Font = Enum.Font.Michroma
+                        button.LineHeight = 1.020
+                        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        button.TextScaled = true
+                        button.TextSize = 14.000
+                        button.Text = tabela.text
+                        button.TextStrokeTransparency = 0.000
+                        button.TextWrapped = true
+                        button.TextXAlignment = Enum.TextXAlignment.Left
+                    end;
+                    newtoggle = function(tabela)
+                        tabela = tabela or {title = "";flag = function(state)end}
+                        local toggle = Instance.new("Frame")
+                        local TextButton = Instance.new("TextButton")
+                        
+                        
+                        toggle.Name = "toggle"
+                        toggle.Parent = Tab
+                        toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        toggle.Position = UDim2.new(0, 0, 0.165562913, 0)
+                        toggle.Size = UDim2.new(0, 18, 0, 18)
+                        
+                        TextButton.Parent = toggle
+                        TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        TextButton.BackgroundTransparency = 1.000
+                        TextButton.BorderSizePixel = 0
+                        TextButton.Position = UDim2.new(1.27777779, 0, 0.0182122122, 0)
+                        TextButton.Size = UDim2.new(13.4444447, 0, 0.944444418, 0)
+                        TextButton.Font = Enum.Font.Michroma
+                        TextButton.LineHeight = 1.020
+                        TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        TextButton.TextScaled = true
+                        TextButton.TextSize = 14.000
+                        TextButton.Text = tabela.title
+                        TextButton.TextStrokeTransparency = 0.000
+                        TextButton.TextWrapped = true
+                        TextButton.TextXAlignment = Enum.TextXAlignment.Left
+                        local toggled = false
+
+                        TextButton.MouseButton1Click:Connect(function()
+                            toggled = not toggled
+                            spawn(function()
+                                if toggled then
+                                    toggle.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+                                else
+                                    toggle.BackgroundColor3 = Color3.fromRGB(255,255,255)
+                                end
+                                pcall(tabela.flag, toggled)
+                            end)
+                        end)
+                    end;
+                    newslider = function(tabela)
+                        tabela = tabela or {title = "";min=15;max=30;flag}
+                        local slider = Instance.new("TextLabel")
+                        local BotaoSlider = Instance.new("TextButton")
+                        local Mover = Instance.new("Frame")
+                        local button = Instance.new("TextLabel")
+
+                        slider.Name = "slider"
+                        slider.Parent = Tab
+                        slider.Active = true
+                        slider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        slider.BackgroundTransparency = 1.000
+                        slider.BorderSizePixel = 0
+                        slider.Position = UDim2.new(0, 0, 0.158940405, 0)
+                        slider.Selectable = true
+                        slider.Size = UDim2.new(0, 265, 0, 42)
+                        slider.Font = Enum.Font.Michroma
+                        slider.LineHeight = 1.020
+                        slider.Text = tabela.title
+                        slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        slider.TextSize = 26.000
+                        slider.TextStrokeTransparency = 0.000
+                        slider.TextWrapped = true
+                        slider.TextXAlignment = Enum.TextXAlignment.Left
+                        slider.TextYAlignment = Enum.TextYAlignment.Top
+
+                        BotaoSlider.Name = "BotaoSlider"
+                        BotaoSlider.Parent = slider
+                        BotaoSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        BotaoSlider.BorderSizePixel = 0
+                        BotaoSlider.Position = UDim2.new(0.0301886797, 0, 0.861344576, 0)
+                        BotaoSlider.Size = UDim2.new(0.894339621, 0, 0.119047619, 0)
+                        BotaoSlider.Font = Enum.Font.SourceSans
+                        BotaoSlider.Text = ""
+                        BotaoSlider.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        BotaoSlider.TextSize = 14.000
+
+                        Mover.Name = "Mover"
+                        Mover.Parent = BotaoSlider
+                        Mover.Active = true
+                        Mover.BackgroundColor3 = Color3.fromRGB(255, 46, 46)
+                        Mover.BorderSizePixel = 0
+                        Mover.Position = UDim2.new(-0.0031207765, 0, 0.0470581055, 0)
+                        Mover.Selectable = true
+                        Mover.Size = UDim2.new(0.704641342, 0, 1, 0)
+
+                        button.Name = "button"
+                        button.Parent = Mover
+                        button.Active = true
+                        button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        button.BackgroundTransparency = 1.000
+                        button.BorderSizePixel = 0
+                        button.Position = UDim2.new(1, 0, -1.16821289, 0)
+                        button.Selectable = true
+                        button.Size = UDim2.new(0.0958083868, 0, 3.5999999, 0)
+                        button.Font = Enum.Font.Michroma
+                        button.LineHeight = 1.020
+                        button.Text = "2"
+                        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        button.TextScaled = true
+                        button.TextSize = 14.000
+                        button.TextStrokeTransparency = 0.000
+                        button.TextWrapped = true
+                        button.TextXAlignment = Enum.TextXAlignment.Left
+
+                        BotaoSlider.MouseButton1Down:Connect(function()
+                            local mouse = speaker:GetMouse()
+                            connection = speaker:GetMouse().Move:Connect(function()
+                                value = 0
+
+                                value = math.floor((((tonumber(tabela.max) - tonumber(tabela.min)) / 235) * Mover.AbsoluteSize.X) + tonumber(tabela.min))
+                                pcall(tabela.flag, value)
+                                button.Text = tostring(value)
+                                Mover.Size = UDim2.new(0, math.clamp(mouse.X - Mover.AbsolutePosition.X, 0, 235), 0, 5)
+                            end)
+
+                            releaseconnection  = game:GetService("UserInputService").InputEnded:Connect(function(input)
+                                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                                    value = 0
+
+                                    value = math.floor((((tonumber(tabela.max) - tonumber(tabela.min)) / 235) * Mover.AbsoluteSize.X) + tonumber(tabela.min))
+                                    pcall(tabela.flag, value)
+                                    button.Text = tostring(value)
+                                    Mover.Size = UDim2.new(0, math.clamp(mouse.X - Mover.AbsolutePosition.X, 0, 235), 0, 5)
+                                    connection:Disconnect()
+                                    releaseconnection:Disconnect()
+                                end
+                            end)
+
+                        end)
+                    end;
+                    newtextbox = function(tabela)
+                        tabela = tabela or {title = "";type=2;flag = function()end}
+                        local button = Instance.new("TextBox")
+
+
+                        button.Name = "button"
+                        button.Parent = Tab
+                        button.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+                        button.BackgroundTransparency = 1.000
+                        button.BorderSizePixel = 0
+                        button.Position = UDim2.new(0, 0, 0.0182119198, 0)
+                        button.Size = UDim2.new(0, 265, 0, 20)
+                        button.Font = Enum.Font.Michroma
+                        button.LineHeight = 1.020
+                        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        button.TextScaled = true
+                        button.TextSize = 14.000
+                        button.Text = tabela.title
+                        button.TextStrokeTransparency = 0.000
+                        button.TextWrapped = true
+                        button.TextXAlignment = Enum.TextXAlignment.Left
+                        button.FocusLost:Connect(function()
+                            if tabela.type == 2 then
+                                if tonumber(button.Text) ~= nil then
+                                    pcall(tabela.flag, tonumber(button.Text))
+                                end
+                            else
+                                pcall(tabela.flag, button.Text)
+                            end
+
+                            button.Text = tabela.title
+                        end)
+                    end;
+                }
+            end
+        }
+    end
+}
+
+return library
