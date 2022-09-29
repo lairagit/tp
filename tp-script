@@ -121,6 +121,7 @@ end
 function Teleport(pos, altura) teleport(pos, altura) end
 
 local function tip(vector, altura)
+    altura = altura or 400
     Teleport(vector, altura)
 end
 
