@@ -104,11 +104,11 @@ function tp(vector)
         
     end)
 
-    repeat task.wait() getRoot(speaker).Velocity = Vector3.new(0, 0, 0) until reached == true or abort == true
-    getRoot(speaker).Velocity = Vector3.new(0, 0, 0)
+    repeat task.wait() until reached == true or abort == true
+
     Loop:Disconnect()
     BodyVelocity:Destroy()
-    getRoot(speaker).Velocity = Vector3.new(0, 3, 0)
+
 end
 
 function teleport(pos, altura)
