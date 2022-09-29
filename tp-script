@@ -111,17 +111,17 @@ function tp(vector)
     getRoot(speaker).Velocity = Vector3.new(0, 3, 0)
 end
 
-function teleport(pos)
-    tp(getRoot(speaker).Position + Vector3.new(0, 400, 0))
+function teleport(pos, altura)
+    tp(getRoot(speaker).Position + Vector3.new(0, altura, 0))
     wait()
-    tp(pos + Vector3.new(0, 400, 0))
+    tp(pos + Vector3.new(0, altura, 0))
     wait()
     tp(pos)
 end
-function Teleport(pos) teleport(pos) end
+function Teleport(pos, altura) teleport(pos, altura) end
 
-local function tip(vector)
-    Teleport(vector)
+local function tip(vector, altura)
+    Teleport(vector, altura)
 end
 
 return tip
