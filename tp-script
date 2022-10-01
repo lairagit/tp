@@ -25,17 +25,11 @@ end
 game:GetService("RunService").RenderStepped:Connect(function()
     if inauto then
         if getCar() then
-            getCar().Asphalt.Volume = 0
+            getCar().Asphalt:Stop()
         end
     end
 end)
-game:GetService("RunService").Heartbeat:Connect(function()
-    if inauto then
-        if getCar() then
-            getCar().Asphalt.Volume = 0
-        end
-    end
-end)
+
 
 local function Tp(pos, isup)
     inauto = true
@@ -84,6 +78,9 @@ local function Tp(pos, isup)
         end
     until reached == true or Root.Parent.Humanoid.Health == 0
     inauto = false
+    if getCar() then
+        getCar().Asphalt:Play()
+    end
     step:Disconnect()
     bodyPosition:Destroy()
 end
