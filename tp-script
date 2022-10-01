@@ -22,9 +22,23 @@ function getCar()
     end
 end
     
-
+game:GetService("RunService").RenderStepped:Connect(function()
+    if inauto then
+        if getCar() then
+            getCar().Asphalt.Volume = 0
+        end
+    end
+end)
+game:GetService("RunService").Heartbeat:Connect(function()
+    if inauto then
+        if getCar() then
+            getCar().Asphalt.Volume = 0
+        end
+    end
+end)
 
 local function Tp(pos, isup)
+    inauto = true
     isup = isup or false
     local bodyPosition = Instance.new("BodyPosition", Root)
     bodyPosition.Position = Root.Position
@@ -66,9 +80,10 @@ local function Tp(pos, isup)
         task.wait()
         if getCar() then
             getCar().BodyGyro.MaxTorque = Vector3.new(9e9, 0, 9e9)
-            getCar().Asphalt.Volume = 0
+            
         end
     until reached == true or Root.Parent.Humanoid.Health == 0
+    inauto = false
     step:Disconnect()
     bodyPosition:Destroy()
 end
@@ -93,21 +108,22 @@ function getCamaro()
 end
 
 function Tp2(pos, altura)
+    altura = altura or 500
+    local up = altura
     if Root.Parent.Humanoid.Sit == false then
         if getCamaro() then
             local vehicle,spec,dist = getCamaro()
 
             Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
             Tp(vehicle.Seat.Position + Vector3.new(0, up, 0))
-            Root.CFrame = CFrame.new(vehicle.Seat.Position) + Vector3.new(0, Root.Size.Y + 10, 0)
+            Root.CFrame = CFrame.new(vehicle.Seat.Position) + Vector3.new(0, 10, 0)
             Root.Velocity = Vector3.new(0,0,0)
             wait(0.3)
             spec:Callback(true)
             wait(0.5)
         end
     end
-    altura = altura or 500
-    local up = altura
+    
     if getCar() then
         getCar().CFrame = getCar().CFrame + Vector3.new(0, up, 0)
     else
