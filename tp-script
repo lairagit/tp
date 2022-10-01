@@ -1,128 +1,99 @@
-
-local speaker = game.Players.LocalPlayer
-local function getRoot(plr)
-    local char = plr.Character
-
-    if char and char:FindFirstChild('HumanoidRootPart') then
-        return char.HumanoidRootPart
-    end
-    return false
-end
-local function getCharacter(plr)
-    local char = plr.Character
-
-    if char then
-        return char
-    end
-    return false
-end
-local function getHead(plr)
-    local char = plr.Character
-
-    if char and char:FindFirstChild('Head') then
-        return char.Head
-    end
-    return false
-end
-local function getHumanoid(plr)
-    local char = plr.Character
-
-    if char and char:FindFirstChildWhichIsA('Humanoid') then
-        return char:FindFirstChildWhichIsA('Humanoid')
-    end
-    return false
-end
-local function FindTool(toolName, plr)
-    plr = plr or game.Players.LocalPlayer
-
-    if getCharacter(plr):FindFirstChild(toolName) then
-        return getCharacter(plr):FindFirstChild(toolName)
-    elseif plr.Backpack:FindFirstChild(toolName) then
-        return plr.Backpack:FindFirstChild(toolName)
-    end
-    return false
-end
-local function FindPlayer(name)
-    for i,v in pairs(game.Players:GetChildren()) do
-        if v.Name:lower():match(v.Name:lower()) then
-            return v
+if not getgenv().SkyStop then
+    local NOME = 'StopSkydiving'
+    for i,v in next, getgc(true) do
+        if type(v) == 'function' and getinfo(v).name == NOME then
+            getgenv().SkyStop = v 
         end
     end
-    return nil
 end
-
-
-
-function tp(vector)
-    if typeof(vector) == 'table' then
-        vector = Vector3.new(vector[1], vector[2], vector[3])
-    end
-    customvelo = customvelo or 5e4
-    faltando = faltando or false
-    isplayer = isplayer or false
-    abort = false
-    if customvelo == nil then
-        customvelo = 150000
-    end
-    local aperta = false
     
-
-
-    pcall(function()
-        local item = require(game:GetService("ReplicatedStorage").Module.AlexRagdoll)
-        local oldfunction = item.Ragdoll
-        item.Ragdoll = function()
-            return wait(9e9)
-        end
+local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+    game:GetService("RunService").Stepped:Connect(function()
+        Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
     end)
-    local BodyVelocity = Instance.new('BodyPosition')
-    BodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-    BodyVelocity.D = 500
-    BodyVelocity.P = 50000
-    BodyVelocity.Parent = getRoot(speaker)
-    local reached = false
-    local old = teleport_velo
-    local Loop = game:GetService('RunService').Stepped:Connect(function(_, step)
-        
-        local yourRoot = getRoot(speaker)
-        local diff
-        if isplayer == true then
-            vector = getRoot(target).Position + Vector3.new(0, 400, 0)
+    require(game:GetService("ReplicatedStorage").Module.AlexRagdoll).Ragdoll=function()return wait(9e9) end
+    function getCar()
+        for i,v in pairs(game:GetService("Workspace").Vehicles:GetDescendants()) do
+            if v.Name == "Seat" and v:FindFirstChild("PlayerName") ~= nil then
+                if v.PlayerName.Value == game.Players.LocalPlayer.Name then
+                    return v.Parent.Engine
+                end
+            end
         end
-        diff = (vector - getRoot(speaker).Position)
-        if speaker.Character:FindFirstChild('Humanoid').Sit == true then
-            BodyVelocity.P = customvelo
-            teleport_velo = 400
+    end
+    
+    
+    
+    local function Tp(pos, isup)
+        isup = isup or false
+        local bodyPosition = Instance.new("BodyPosition", Root)
+        bodyPosition.Position = Root.Position
+        bodyPosition.D = 500
+        bodyPosition.P = 150000
+        bodyPosition.MaxForce  = Vector3.new(9e9,9e9,9e9)
+    
+        local reached = false
+        step = game:GetService("RunService").Stepped:Connect(function(_, step)
+            div = 0
+            
+            if isup == true then
+                speed = "NO"
+            elseif typeof(isup) == 'number' then
+                speed = isup
+            elseif Root.Parent.Humanoid.Sit == true then
+                speed = 200
+            elseif Root.Parent.Humanoid.Sit == false then
+                speed = 100
+            end
+            local diff = (Root.Position - pos)
+            if speed ~= "NO" then
+                speed = diff.Magnitude / speed
+            else
+                speed = 0 
+            end
+    
+            
+    
+            game:GetService("TweenService"):Create(bodyPosition, TweenInfo.new(speed, Enum.EasingStyle.Linear), {Position = pos}):Play()
+            if diff.Magnitude < 0.1 then
+                reached = true
+            end
+            
+    
+            
+        end)
+        repeat
+            task.wait()
+            if getCar() then
+                getCar().BodyGyro.MaxTorque = Vector3.new(9e9, 0, 9e9)
+                getCar().Asphalt.Volume = 0
+            end
+        until reached == true or Root.Parent.Humanoid.Health == 0
+        step:Disconnect()
+        bodyPosition:Destroy()
+    end
+    
+    
+    function Tp2(pos, altura)
+        altura = altura or 500
+        local up = altura
+        if getCar() then
+            getCar().CFrame = getCar().CFrame + Vector3.new(0, up, 0)
         else
-            teleport_velo = 180
-            BodyVelocity.P = 50000
+            Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
         end
-        if (vector - getRoot(speaker).Position).Magnitude < 1 or speaker.Character.Humanoid.Health == 0 then
-            reached = true
+        Tp(pos + Vector3.new(0, up, 0))
+        wait()
+        if getCar() then
+            getCar().CFrame = CFrame.new(pos) + Vector3.new(0, getCar().Size.Y, 0)
+            getCar().Velocity = Vector3.new(0,0,0)
+        else
+            if getCar() then
+                getCar().BodyGyro.MaxTorque = Vector3.new(0, 0, 0)
+            end
+            Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
+            Root.Velocity = Vector3.new(0,0,0)
         end
-        BodyVelocity.Position = getRoot(speaker).Position + diff.Unit * math.min(step * teleport_velo, diff.Magnitude)
-        
-    end)
-
-    repeat task.wait() until reached == true or abort == true
-
-    Loop:Disconnect()
-    BodyVelocity:Destroy()
-
-end
-
-function teleport(pos, altura)
-    tp(getRoot(speaker).Position + Vector3.new(0, altura, 0))
-    wait()
-    tp(pos + Vector3.new(0, altura, 0))
-    wait()
-    tp(pos)
-end
-function Teleport(pos, altura) teleport(pos, altura) end
-
-local function tip(vector, altura)
-    altura = altura or 400
-    Teleport(vector, altura)
-end
-
-return tip
+    end
+    
+    return Tp, Tp2
