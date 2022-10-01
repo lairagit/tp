@@ -75,8 +75,8 @@ end
 
 function getCamaro()
     local vehicle, spec, nearest = nil,nil, 900
-
-    for i, v in next, require(game.ReplicatedStorage.Module.UI).CircleActions.Specs do
+                             
+    for i, v in next, require(game.ReplicatedStorage.Module.UI).CircleAction.Specs do
         if v.Name == "Enter Driver" and v.ValidRoot.Name == "Camaro" --[[or Jeep]] then
             local dist = (v.ValidRoot.PrimaryPart.Position - Root.Position).Magnitude
 
@@ -93,13 +93,6 @@ function getCamaro()
 end
 
 function Tp2(pos, altura)
-    local args = {
-        [1] = "Chassis",
-        [2] = "Camaro"
-    }
-    
-    game:GetService("ReplicatedStorage").GarageSpawnVehicle:FireServer(unpack(args))
-    wait(0.3)
     if Root.Parent.Humanoid.Sit == false then
         if getCamaro() then
             local vehicle,spec,dist = getCamaro()
