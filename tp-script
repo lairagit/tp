@@ -8,92 +8,130 @@ if not getgenv().SkyStop then
 end
     
 local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
-    game:GetService("RunService").Stepped:Connect(function()
-        Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
+game:GetService("RunService").Stepped:Connect(function()
+    Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
+end)
+require(game:GetService("ReplicatedStorage").Module.AlexRagdoll).Ragdoll=function()return wait(9e9) end
+function getCar()
+    for i,v in pairs(game:GetService("Workspace").Vehicles:GetDescendants()) do
+        if v.Name == "Seat" and v:FindFirstChild("PlayerName") ~= nil then
+            if v.PlayerName.Value == game.Players.LocalPlayer.Name then
+                return v.Parent.Engine
+            end
+        end
+    end
+end
+    
+
+
+local function Tp(pos, isup)
+    isup = isup or false
+    local bodyPosition = Instance.new("BodyPosition", Root)
+    bodyPosition.Position = Root.Position
+    bodyPosition.D = 500
+    bodyPosition.P = 150000
+    bodyPosition.MaxForce  = Vector3.new(9e9,9e9,9e9)
+
+    local reached = false
+    step = game:GetService("RunService").Stepped:Connect(function(_, step)
+        div = 0
+        
+        if isup == true then
+            speed = "NO"
+        elseif typeof(isup) == 'number' then
+            speed = isup
+        elseif Root.Parent.Humanoid.Sit == true then
+            speed = 200
+        elseif Root.Parent.Humanoid.Sit == false then
+            speed = 100
+        end
+        local diff = (Root.Position - pos)
+        if speed ~= "NO" then
+            speed = diff.Magnitude / speed
+        else
+            speed = 0 
+        end
+
+        
+
+        game:GetService("TweenService"):Create(bodyPosition, TweenInfo.new(speed, Enum.EasingStyle.Linear), {Position = pos}):Play()
+        if diff.Magnitude < 0.1 then
+            reached = true
+        end
+        
+
+        
     end)
-    require(game:GetService("ReplicatedStorage").Module.AlexRagdoll).Ragdoll=function()return wait(9e9) end
-    function getCar()
-        for i,v in pairs(game:GetService("Workspace").Vehicles:GetDescendants()) do
-            if v.Name == "Seat" and v:FindFirstChild("PlayerName") ~= nil then
-                if v.PlayerName.Value == game.Players.LocalPlayer.Name then
-                    return v.Parent.Engine
-                end
+    repeat
+        task.wait()
+        if getCar() then
+            getCar().BodyGyro.MaxTorque = Vector3.new(9e9, 0, 9e9)
+            getCar().Asphalt.Volume = 0
+        end
+    until reached == true or Root.Parent.Humanoid.Health == 0
+    step:Disconnect()
+    bodyPosition:Destroy()
+end
+
+function getCamaro()
+    local vehicle, spec, nearest = nil, 900
+
+    for i, v in next, require(game.ReplicatedStorage.Module.UI).CircleActions.Specs do
+        if v.Name == "Enter Driver" and v.ValidRoot.Name == "Camaro" --[[or Jeep]] then
+            local dist = (v.ValidRoot.PrimaryPart.Position - Root.Position).Magnitude
+
+            if dist < nearest then
+                vehicle, spec, nearest = v.ValidRoot, v, dist
             end
         end
     end
-    
-    
-    
-    local function Tp(pos, isup)
-        isup = isup or false
-        local bodyPosition = Instance.new("BodyPosition", Root)
-        bodyPosition.Position = Root.Position
-        bodyPosition.D = 500
-        bodyPosition.P = 150000
-        bodyPosition.MaxForce  = Vector3.new(9e9,9e9,9e9)
-    
-        local reached = false
-        step = game:GetService("RunService").Stepped:Connect(function(_, step)
-            div = 0
-            
-            if isup == true then
-                speed = "NO"
-            elseif typeof(isup) == 'number' then
-                speed = isup
-            elseif Root.Parent.Humanoid.Sit == true then
-                speed = 200
-            elseif Root.Parent.Humanoid.Sit == false then
-                speed = 100
-            end
-            local diff = (Root.Position - pos)
-            if speed ~= "NO" then
-                speed = diff.Magnitude / speed
-            else
-                speed = 0 
-            end
-    
-            
-    
-            game:GetService("TweenService"):Create(bodyPosition, TweenInfo.new(speed, Enum.EasingStyle.Linear), {Position = pos}):Play()
-            if diff.Magnitude < 0.1 then
-                reached = true
-            end
-            
-    
-            
-        end)
-        repeat
-            task.wait()
-            if getCar() then
-                getCar().BodyGyro.MaxTorque = Vector3.new(9e9, 0, 9e9)
-                getCar().Asphalt.Volume = 0
-            end
-        until reached == true or Root.Parent.Humanoid.Health == 0
-        step:Disconnect()
-        bodyPosition:Destroy()
+
+    if vehicle ~= nil then
+        return vehicle,spec
+        -- tp to 'vehicle.Seat' and call 'spec:Callback(true)'
     end
+end
+
+function Tp2(pos, altura)
+    local args = {
+        [1] = "Chassis",
+        [2] = "Camaro"
+    }
     
-    
-    function Tp2(pos, altura)
-        altura = altura or 500
-        local up = altura
-        if getCar() then
-            getCar().CFrame = getCar().CFrame + Vector3.new(0, up, 0)
-        else
+    game:GetService("ReplicatedStorage").GarageSpawnVehicle:FireServer(unpack(args))
+    wait(0.3)
+    if Root.Parent.Humanoid.Sit == false then
+        if getCamaro() then
+            local vehicle,spec,dist = getCamaro()
+
             Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
-        end
-        Tp(pos + Vector3.new(0, up, 0))
-        wait()
-        if getCar() then
-            getCar().CFrame = CFrame.new(pos) + Vector3.new(0, getCar().Size.Y, 0)
-            getCar().Velocity = Vector3.new(0,0,0)
-        else
-            if getCar() then
-                getCar().BodyGyro.MaxTorque = Vector3.new(0, 0, 0)
-            end
-            Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
+            Tp(vehicle.Seat.Position + Vector3.new(0, up, 0))
+            Root.CFrame = CFrame.new(vehicle.Seat.Position) + Vector3.new(0, Root.Size.Y + 10, 0)
             Root.Velocity = Vector3.new(0,0,0)
+            wait(0.3)
+            spec:Callback(true)
+            wait(0.5)
         end
     end
-    
-    return Tp, Tp2
+    altura = altura or 500
+    local up = altura
+    if getCar() then
+        getCar().CFrame = getCar().CFrame + Vector3.new(0, up, 0)
+    else
+        Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
+    end
+    Tp(pos + Vector3.new(0, up, 0))
+    wait()
+    if getCar() then
+        getCar().CFrame = CFrame.new(pos) + Vector3.new(0, getCar().Size.Y, 0)
+        getCar().Velocity = Vector3.new(0,0,0)
+    else
+        if getCar() then
+            getCar().BodyGyro.MaxTorque = Vector3.new(0, 0, 0)
+        end
+        Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
+        Root.Velocity = Vector3.new(0,0,0)
+    end
+end
+
+return Tp, Tp2
