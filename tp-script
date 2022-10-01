@@ -43,7 +43,9 @@ local function Tp(pos, isup)
     local reached = false
     step = game:GetService("RunService").Stepped:Connect(function(_, step)
         div = 0
-        
+        if getCar() then
+            getCar().CFrame = CFrame.new(getCar().Position, pos)
+        end
         if isup == true then
             speed = "NO"
         elseif typeof(isup) == 'number' then
