@@ -92,7 +92,7 @@ function getCamaro()
     end
 
     if vehicle ~= nil then
-        return vehicle,spec
+        return vehicle,spec,nearest
         -- tp to 'vehicle.Seat' and call 'spec:Callback(true)'
     end
 end
@@ -104,7 +104,7 @@ function Tp2(pos, altura)
         if getCamaro()  then
             local vehicle,spec,dist = getCamaro()
 
-            if true == true then
+            if dist < (getRoot(speaker).Position - pos).Magnitude then
                 Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
                 wait()
                 Tp(vehicle.Seat.Position + Vector3.new(0, up, 0))
