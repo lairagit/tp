@@ -117,9 +117,13 @@ function Tp2(pos, altura)
             wait()
             Root.CFrame = CFrame.new(vehicle.Seat.Position) + Vector3.new(0, 10, 0)
             Root.Velocity = Vector3.new(0,0,0)
-            wait(0.3)
-            spec:Callback(true)
-            wait(0.5)
+
+            repeat
+                wait(0.3)
+                spec:Callback(true)
+                wait(0.5)
+            until getCar() ~= nil
+
         end
     end
     
