@@ -12,7 +12,9 @@ function getCar()
         end
     end
 end
-    
+function getRoot(plr)
+    return plr.Character.HumanoidRootPart
+end
 game:GetService("RunService").RenderStepped:Connect(function()
     if inauto then
         if getCar() then
