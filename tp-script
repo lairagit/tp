@@ -42,7 +42,7 @@ local function Tp(pos, isup)
         elseif typeof(isup) == 'number' then
             speed = isup
         elseif Root.Parent.Humanoid.Sit == true then
-            speed = 200
+            speed = 400
         elseif Root.Parent.Humanoid.Sit == false then
             speed = 100
         end
