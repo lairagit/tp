@@ -104,7 +104,7 @@ function Tp2(pos, altura)
         if getCamaro()  then
             local vehicle,spec,dist = getCamaro()
 
-            if dist < (getRoot(speaker).Position - pos).Magnitude then
+            if true == true then
                 Root.CFrame = Root.CFrame + Vector3.new(0, up, 0)
                 wait()
                 Tp(vehicle.Seat.Position + Vector3.new(0, up, 0))
