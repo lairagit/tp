@@ -1,12 +1,12 @@
-if not getgenv().SkyStop then
+if not getgenv().STOPSKY then
     local NOME = 'StopSkydiving'
     for i,v in next, getgc(true) do
         if type(v) == 'function' and getinfo(v).name == NOME then
-            getgenv().SkyStop = v 
+            getgenv().STOPSKY = v
         end
     end
 end
-    
+
 local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
 game:GetService("RunService").Stepped:Connect(function()
     Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
@@ -107,7 +107,7 @@ end
 function Tp2(pos, altura)
     altura = altura or 500
     local up = altura
-    if Root.Parent.Humanoid.Sit == false and getgenv().usecar == true then
+    if Root.Parent.Humanoid.Sit == false and usecar == true then
         if getCamaro() then
             local vehicle,spec,dist = getCamaro()
 
@@ -139,6 +139,7 @@ function Tp2(pos, altura)
         end
         Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
         Root.Velocity = Vector3.new(0,0,0)
+        getgenv().STOPSKY()
     end
 end
 
