@@ -153,7 +153,7 @@ function Tp2(pos, altura)
         Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
         Root.Velocity = Vector3.new(0,0,0)
         delay(1, function()
-            if Root.Position.Y > 500 then
+            if Root.Position.Y > 100 then
                 pcall(func)
                 Root.CFrame = CFrame.new(pos + Vector3.new(0, Root.Size.Y + 10, 0))
                 Root.Velocity = Vector3.new(0,0,0)
