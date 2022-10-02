@@ -1,4 +1,12 @@
 local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+local NOME = 'StopSkydiving'
+local func
+for i,v in next, getgc(true) do
+    if type(v) == 'function' and getinfo(v).name == NOME then
+        func = v
+    end
+end
+func()
 game:GetService("RunService").Stepped:Connect(function()
     Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
 end)
@@ -42,7 +50,7 @@ local function Tp(pos, isup)
         elseif typeof(isup) == 'number' then
             speed = isup
         elseif Root.Parent.Humanoid.Sit == true then
-            speed = 500
+            speed = 400
         elseif Root.Parent.Humanoid.Sit == false then
             speed = 100
         end
@@ -142,6 +150,13 @@ function Tp2(pos, altura)
         end
         Root.CFrame = CFrame.new(pos) + Vector3.new(0, Root.Size.Y + 10, 0)
         Root.Velocity = Vector3.new(0,0,0)
+        delay(1, function()
+            if Root.Position.Y > 500 then
+                func()
+                Root.CFrame = CFrame.new(pos + Vector3.new(0, Root.Size.Y + 10, 0))
+                Root.Velocity = Vector3.new(0,0,0)
+            end
+        end)
     end
 end
 
