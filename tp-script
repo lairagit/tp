@@ -42,7 +42,7 @@ local function Tp(pos, isup)
         elseif typeof(isup) == 'number' then
             speed = isup
         elseif Root.Parent.Humanoid.Sit == true then
-            speed = 400
+            speed = 500
         elseif Root.Parent.Humanoid.Sit == false then
             speed = 100
         end
@@ -71,6 +71,10 @@ local function Tp(pos, isup)
         end
     until reached == true or Root.Parent.Humanoid.Health == 0
     inauto = false
+    if getCar() then
+        getCar().BodyGyro.MaxTorque = Vector3.new(0, 0, 0)
+        
+    end
     if getCar() then
         getCar().Asphalt:Play()
     end
