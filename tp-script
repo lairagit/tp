@@ -107,7 +107,7 @@ end
 function Tp2(pos, altura)
     altura = altura or 500
     local up = altura
-    if Root.Parent.Humanoid.Sit == false and usecar == true then
+    if Root.Parent.Humanoid.Sit == false then
         if getCamaro() then
             local vehicle,spec,dist = getCamaro()
 
