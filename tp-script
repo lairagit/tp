@@ -6,7 +6,7 @@ for i,v in next, getgc(true) do
         func = v
     end
 end
-func()
+
 game:GetService("RunService").Stepped:Connect(function()
     Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
 end)
