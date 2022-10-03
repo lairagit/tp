@@ -1,11 +1,13 @@
 local Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
 local NOME = 'StopSkydiving'
 local func
+pcall(function()
 for i,v in next, getgc(true) do
     if type(v) == 'function' and getinfo(v).name == NOME then
         func = v
     end
 end
+end)
 
 game:GetService("RunService").Stepped:Connect(function()
     Root = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart or nil
